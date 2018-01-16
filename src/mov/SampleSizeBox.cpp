@@ -20,12 +20,19 @@ int SampleSizeBox::Parse(class mp4Parser* parser, uint32_t start_pos)
     {
         s->default_sample_size = io->Read32();
         s->stsz_count = io->Read32();
+        s->stsz_data = new uint32_t[s->stsz_count];
         if(s->default_sample_size == 0)
         {
-            s->stsz_data = new uint32_t[s->stsz_count];
             for(int i=0;i<s->stsz_count;i++)
             {
                 s->stsz_data[i] = io->Read32();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < s->stsz_count; i++)
+            {
+                s->stsz_data[i] = s->default_sample_size;
             }
         }
     }
@@ -40,7 +47,7 @@ int SampleSizeBox::Parse(class mp4Parser* parser, uint32_t start_pos)
             count = count/2;
         else if(filed_size == 16)
             count = count*2;
-
+        s->stsz_data = new uint32_t[s->stsz_count];
         for(int i=0;i<count;i++)
         {
             s->stsz_data[i] = io->Read32();
