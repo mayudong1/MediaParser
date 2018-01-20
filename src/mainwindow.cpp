@@ -8,6 +8,7 @@
 #include "mov/BaseBox.h"
 #include "mov/Mp4Parser.h"
 #include "Mp4Display.h"
+#include "FileTypeProbe.h"
 
 #define MIN(a, b) (((a)<(b))?(a):(b))
 #define MAX(a, b) (((a)>(b))?(a):(b))
@@ -69,6 +70,11 @@ void MainWindow::on_openButton_clicked()
 		{
 			delete reader;
 		}
+
+        FileTypeProbe probe;
+        MediaFileType type = probe.Probe(fileName.toLocal8Bit().data());
+        if(type == MediaFileType::FLV)
+            return;
 
         this->reader = new FileReader();
         this->parser = new mp4Parser(reader);

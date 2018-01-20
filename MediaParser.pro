@@ -52,7 +52,8 @@ SOURCES += \
     src/mov/ItemLocationBox.cpp \
     src/mov/ItemPropertyContainerBox.cpp \
     src/mov/ItemPropertyAssociationBox.cpp \
-    src/mov/SingleItemTypeReferenceBox.cpp
+    src/mov/SingleItemTypeReferenceBox.cpp \
+    src/FileTypeProbe.cpp
 
 HEADERS += \
         src/mainwindow.h \
@@ -84,7 +85,8 @@ HEADERS += \
     src/mov/ItemLocationBox.h \
     src/mov/ItemPropertyContainerBox.h \
     src/mov/ItemPropertyAssociationBox.h \
-    src/mov/SingleItemTypeReferenceBox.h
+    src/mov/SingleItemTypeReferenceBox.h \
+    src/FileTypeProbe.h
 
 FORMS += \
     src/MainWindow.ui
