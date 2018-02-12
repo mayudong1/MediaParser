@@ -27,6 +27,8 @@ public:
     int Skip(int len);
     int ReadBuffer(char* buffer, int len);
 
+    bool isEOF();
+
 private:
     FILE* fd;
 };

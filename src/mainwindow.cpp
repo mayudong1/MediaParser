@@ -7,7 +7,9 @@
 #include <QtGlobal>
 #include "mov/BaseBox.h"
 #include "mov/Mp4Parser.h"
+#include "flv/FLVParser.h"
 #include "Mp4Display.h"
+#include "FLVDispaly.h"
 #include "FileTypeProbe.h"
 
 #define MIN(a, b) (((a)<(b))?(a):(b))
@@ -71,24 +73,29 @@ void MainWindow::on_openButton_clicked()
 			delete reader;
 		}
 
+        this->reader = new FileReader();
+
         FileTypeProbe probe;
         MediaFileType type = probe.Probe(fileName.toLocal8Bit().data());
         if(type == MediaFileType::FLV)
-            return;
+        {
+            this->flvParser = new FLVParser(reader);
+            flvParser->Parse(fileName.toLocal8Bit().data());
+            FLVDispaly display;
+            display.Display(ui->structTree, ui->baseInfoTextEdit, flvParser);
+        }
+        else
+        {
+            this->parser = new mp4Parser(reader);
+            ResetSampleInfo();
+            ui->tabWidget->setCurrentIndex(0);
+            ui->hexView->clear();
 
-        this->reader = new FileReader();
-        this->parser = new mp4Parser(reader);
-
-        ResetSampleInfo();
-        ui->tabWidget->setCurrentIndex(0);
-        ui->hexView->clear();
-
-        parser->Parse(fileName.toLocal8Bit().data());
-        mp4Display display;
-        display.Display(ui->structTree, ui->baseInfoTextEdit, parser);
+            parser->Parse(fileName.toLocal8Bit().data());
+            mp4Display display;
+            display.Display(ui->structTree, ui->baseInfoTextEdit, parser);
+        }
         displayHexFromReader(reader, 0, 1024);
-
-
     }
 
 }

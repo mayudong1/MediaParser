@@ -53,7 +53,9 @@ SOURCES += \
     src/mov/ItemPropertyContainerBox.cpp \
     src/mov/ItemPropertyAssociationBox.cpp \
     src/mov/SingleItemTypeReferenceBox.cpp \
-    src/FileTypeProbe.cpp
+    src/FileTypeProbe.cpp \
+    src/flv/FLVParser.cpp \
+    src/FLVDispaly.cpp
 
 HEADERS += \
         src/mainwindow.h \
@@ -86,7 +88,10 @@ HEADERS += \
     src/mov/ItemPropertyContainerBox.h \
     src/mov/ItemPropertyAssociationBox.h \
     src/mov/SingleItemTypeReferenceBox.h \
-    src/FileTypeProbe.h
+    src/FileTypeProbe.h \
+    src/flv/FLVParser.h \
+    src/flv/FLVDefine.h \
+    src/FLVDispaly.h
 
 FORMS += \
     src/MainWindow.ui

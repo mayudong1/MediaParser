@@ -67,7 +67,7 @@ uint32_t FileReader::Read24()
 {
     uint8_t buffer[3];
     fread(buffer, 3, 1, fd);
-    return ((buffer[1]<<16) | (buffer[1]<<8) | buffer[2]);
+    return ((buffer[0]<<16) | (buffer[1]<<8) | buffer[2]);
 }
 
 uint32_t FileReader::Read32()
@@ -92,4 +92,9 @@ int FileReader::Skip(int len)
 int FileReader::ReadBuffer(char* buffer, int len)
 {
     return fread(buffer, 1, len, fd);
+}
+
+bool FileReader::isEOF()
+{
+    return feof(fd);
 }

@@ -46,6 +46,7 @@ private slots:
 private:
     class FileReader* reader;
     class mp4Parser* parser;
+    class FLVParser* flvParser;
 
     bool bShowVideoSample;
 
