@@ -8,7 +8,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class BaseBox;
+class BasePosition;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -22,7 +22,7 @@ private:
     void displayHexFromReader(class FileReader* reader, int start, int len);
     void setHighlight(int start, int len);
     void clearDisplay();
-    BaseBox* getItemBox(QTreeWidgetItem* item);
+    BasePosition* getItemBasePosition(QTreeWidgetItem* item);
 
     void ResetSampleInfo();
     void ShowSample(struct Stream* s, int index);

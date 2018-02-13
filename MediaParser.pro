@@ -55,7 +55,8 @@ SOURCES += \
     src/mov/SingleItemTypeReferenceBox.cpp \
     src/FileTypeProbe.cpp \
     src/flv/FLVParser.cpp \
-    src/FLVDispaly.cpp
+    src/FLVDispaly.cpp \
+    src/BasePosition.cpp
 
 HEADERS += \
         src/mainwindow.h \
@@ -91,7 +92,8 @@ HEADERS += \
     src/FileTypeProbe.h \
     src/flv/FLVParser.h \
     src/flv/FLVDefine.h \
-    src/FLVDispaly.h
+    src/FLVDispaly.h \
+    src/BasePosition.h
 
 FORMS += \
     src/MainWindow.ui

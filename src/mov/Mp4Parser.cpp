@@ -164,7 +164,7 @@ BaseBox* mp4Parser::ReadBox(uint32_t start_pos)
 	}
     BaseBox* box = AllocBox(type, size);
 
-    box->SetPosition(start_pos);
+    box->SetPosition(start_pos, size);
     box->Parse(this, start_pos+index);
 
     return box;

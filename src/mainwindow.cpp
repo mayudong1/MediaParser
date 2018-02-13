@@ -11,6 +11,7 @@
 #include "Mp4Display.h"
 #include "FLVDispaly.h"
 #include "FileTypeProbe.h"
+#include "BasePosition.h"
 
 #define MIN(a, b) (((a)<(b))?(a):(b))
 #define MAX(a, b) (((a)>(b))?(a):(b))
@@ -187,23 +188,23 @@ void MainWindow::clearDisplay()
 }
 
 
-BaseBox* MainWindow::getItemBox(QTreeWidgetItem* item)
+BasePosition* MainWindow::getItemBasePosition(QTreeWidgetItem* item)
 {
-    BaseBox* box = NULL;
+    BasePosition* pos = NULL;
     QVariant value = item->data(0, Qt::UserRole);
-    box = (BaseBox*)value.value<void *>();
-    return box;
+    pos = (BasePosition*)value.value<void *>();
+    return pos;
 }
 
 void MainWindow::on_structTree_itemClicked(QTreeWidgetItem * item, int column)
 {
     ui->hexView->clear();
-    BaseBox* box = getItemBox(item);
-    if(box == NULL)
+    BasePosition* pos = getItemBasePosition(item);
+    if(pos == NULL)
         return;
 
-    ui->baseInfoTextEdit->setText(box->GetDescription().c_str());
-    this->displayHexFromReader(reader, box->start_pos, box->size);
+    ui->baseInfoTextEdit->setText(pos->GetDescription().c_str());
+    this->displayHexFromReader(reader, pos->start_pos, pos->length);
 }
 
 void MainWindow::on_radioVideo_clicked()

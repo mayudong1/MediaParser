@@ -30,7 +30,7 @@ int ItemReferenceBox::Parse(class mp4Parser* parser, uint32_t start_pos)
         {
             box->setLargeItemId(true);
         }
-        box->SetPosition(start_pos+index);
+        box->SetPosition(start_pos+index, size);
         box->Parse(parser, start_pos + index + 8);
         parser->AddBox(this, box);
 

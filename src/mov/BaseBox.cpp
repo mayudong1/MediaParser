@@ -27,23 +27,11 @@ BaseBox::~BaseBox()
     memset(this->name, 0, 5);
 }
 
-void BaseBox::SetPosition(uint32_t start)
-{
-    this->start_pos = start;
-}
-
 int BaseBox::Parse(class mp4Parser* parser, uint32_t start_pos)
 {
     parser;
     start_pos;
     return 0;
-}
-
-string BaseBox::GetDescription()
-{
-    char tmp[128];
-    sprintf(tmp, "offset = %d, len = %d\n", start_pos, size);
-    return tmp;
 }
 
 void BaseBox::AddChild(BaseBox* child)
