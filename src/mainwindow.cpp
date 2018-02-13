@@ -198,7 +198,14 @@ BasePosition* MainWindow::getItemBasePosition(QTreeWidgetItem* item)
 
 void MainWindow::on_structTree_itemClicked(QTreeWidgetItem * item, int column)
 {
-    ui->hexView->clear();
+    ui->hexView->clear();    
+    if(item == ui->structTree->topLevelItem(0))
+    {
+        ui->baseInfoTextEdit->clear();
+        this->displayHexFromReader(reader, 0, 1024);
+        return;
+    }
+
     BasePosition* pos = getItemBasePosition(item);
     if(pos == NULL)
         return;
