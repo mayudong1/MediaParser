@@ -22,6 +22,8 @@ void FLVDispaly::DisplayFlvHeader(QTreeWidgetItem* root, FLVParser* parser)
     root->addChild(header);
 
     FLVStruct* flv = parser->flv;
+    QVariant value = QVariant::fromValue((void *)&flv->header.FLVHeader_pos);
+    header->setData(0, Qt::UserRole, value);
 
     QString strTmp;
     strTmp.sprintf("signature: %s", flv->header.signature);
@@ -74,12 +76,16 @@ void FLVDispaly::DisplayFlvTags(QTreeWidgetItem* root, FLVParser* parser)
             break;
         }
         QTreeWidgetItem *tagItem = new QTreeWidgetItem(QStringList(strTagType));
+        QVariant value = QVariant::fromValue((void *)&tag->FLVTag_pos);
+        tagItem->setData(0, Qt::UserRole, value);
         root->addChild(tagItem);
 
 //        displayFLVTagDetail(tagItem, tag);
 
         strTmp.sprintf("preTagSize: %d", tag->preTagSize);
         QTreeWidgetItem *preTagSizeItem = new QTreeWidgetItem(QStringList(strTmp));
+        QVariant preTagSizeItemValue = QVariant::fromValue((void *)&tag->preTagSize_pos);
+        preTagSizeItem->setData(0, Qt::UserRole, preTagSizeItemValue);
         root->addChild(preTagSizeItem);
         tag = tag->next;
     }

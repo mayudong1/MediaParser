@@ -69,6 +69,7 @@ int FLVParser::Parse(const char* filename)
 
 int FLVParser::parseFLVHeader()
 {
+    flv->header.FLVHeader_pos.SetPosition(io->GetPos(), 9);
     flv->header.signature[0] = io->Read8();
     flv->header.signature[1] = io->Read8();
     flv->header.signature[2] = io->Read8();
@@ -106,9 +107,11 @@ int FLVParser::parseFLVTags()
         uint8_t timestampEx = io->Read8();
         tag->header.timestamp = timestampEx<<24 | timestamp;
         tag->header.streamId = io->Read24();
+        tag->FLVTag_pos.SetPosition(io->GetPos()-11, tag->header.dataSize+11);
 
         io->Skip(tag->header.dataSize);
         tag->preTagSize = io->Read32();
+        tag->preTagSize_pos.SetPosition(io->GetPos()-4, 4);
         p->next = tag;
         p = p->next;
         if(io->isEOF())
