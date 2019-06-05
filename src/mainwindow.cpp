@@ -10,7 +10,6 @@
 #include "flv/FLVParser.h"
 #include "Mp4Display.h"
 #include "FLVDispaly.h"
-#include "FileTypeProbe.h"
 #include "BasePosition.h"
 
 #define MIN(a, b) (((a)<(b))?(a):(b))
@@ -77,8 +76,8 @@ void MainWindow::on_openButton_clicked()
         this->reader = new FileReader();
 
         FileTypeProbe probe;
-        MediaFileType type = probe.Probe(fileName.toLocal8Bit().data());
-        if(type == MediaFileType::FLV)
+        file_type = probe.Probe(fileName.toLocal8Bit().data());
+        if(file_type == MediaFileType::FLV)
         {
             this->flvParser = new FLVParser(reader);
             flvParser->Parse(fileName.toLocal8Bit().data());
@@ -202,6 +201,16 @@ void MainWindow::on_structTree_itemClicked(QTreeWidgetItem * item, int column)
     if(item == ui->structTree->topLevelItem(0))
     {
         ui->baseInfoTextEdit->clear();
+        if(file_type == MediaFileType::FLV)
+        {
+            FLVDispaly display;
+            display.Display(ui->structTree, ui->baseInfoTextEdit, flvParser);
+        }
+        else
+        {
+            mp4Display display;
+            display.Display(ui->structTree, ui->baseInfoTextEdit, parser);
+        }
         this->displayHexFromReader(reader, 0, 1024);
         return;
     }

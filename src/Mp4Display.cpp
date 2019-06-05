@@ -31,7 +31,7 @@ void mp4Display::Display(QTreeWidget* tree, QTextEdit* edit, mp4Parser* parser)
     ShowBox(root, mp4->childs);
 
     QString info;
-    info.sprintf("duration = %.02f\n", (float)parser->duration/parser->timescale);
+    info.sprintf("duration = %.02f(%d/%d)\n", (float)parser->duration/parser->timescale, parser->duration, parser->timescale);
     edit->setText(info);
 
 

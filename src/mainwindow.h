@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "ui_mainwindow.h"
+#include "FileTypeProbe.h"
 
 namespace Ui {
 class MainWindow;
@@ -45,6 +46,7 @@ private slots:
 
 private:
     class FileReader* reader;
+    MediaFileType file_type;
     class mp4Parser* parser;
     class FLVParser* flvParser;
 
