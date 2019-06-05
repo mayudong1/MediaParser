@@ -17,7 +17,6 @@ public:
 
 public:
     virtual int Parse(class mp4Parser* parser, uint32_t start_pos);
-
 public:
     uint32_t size;
     uint32_t type;

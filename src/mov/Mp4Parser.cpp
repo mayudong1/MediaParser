@@ -76,6 +76,7 @@ BaseBox* mp4Parser::AllocBox(uint32_t type, uint32_t size)
     switch(type)
     {
     case FOURCC_moov:
+    case FOURCC_edts:
     case FOURCC_mdia:
     case FOURCC_minf:
 	case FOURCC_dinf:

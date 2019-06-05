@@ -17,7 +17,7 @@ int TrackHeaderBox::Parse(class mp4Parser* parser, uint32_t start_pos)
     io->SetPos(start_pos);
 
     uint64_t creation_time, modification_time;
-    uint32_t timescale, duration;
+    uint64_t timescale, duration;
     uint32_t track_id;
 
     uint8_t version = io->Read8();
@@ -53,6 +53,19 @@ int TrackHeaderBox::Parse(class mp4Parser* parser, uint32_t start_pos)
     Stream* stream = parser->streams[parser->stream_num-1];
     stream->tkhd_width = io->Read32()>>16;
     stream->tkhd_height = io->Read32()>>16;
+    this->duration = duration;
+    this->width = stream->tkhd_width;
+    this->height = stream->tkhd_height;
 
     return 0;
+}
+
+string TrackHeaderBox::GetDescription()
+{
+    string desc = BasePosition::GetDescription();
+    char tmp[128];
+    sprintf(tmp, "duration = %lld\nwidth = %ld\nheight = %ld\n",
+            this->duration, this->width, this->height);
+    desc += tmp;
+    return desc;
 }
