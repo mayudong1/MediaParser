@@ -29,8 +29,11 @@ public:
     void DeleteStream(Stream* stream);
 
     void GetSamplePosition(Stream* s);
+    void GetSampleTimeStamp(Stream* s);
     Stream* GetVideoStream();
     Stream* GetAudioStream();
+private:
+    int FindFirstDisplaySample(Stream* s);
 public:
     FileReader* io;
     FileReader* inner_io;

@@ -11,6 +11,10 @@ public:
 
 public:
     virtual int Parse(class mp4Parser* parser, uint32_t start_pos);
+    string GetDescription();
+private:
+    uint32_t timescale, duration;
+    Stream* s;
 };
 
 #endif // MEDIAHEADERBOX_H

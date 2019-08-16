@@ -21,6 +21,7 @@
 #include "ItemLocationBox.h"
 #include "ItemPropertyContainerBox.h"
 #include "ItemPropertyAssociationBox.h"
+#include "EditListBox.h"
 
 #include <stdio.h>
 #include <QtGlobal>
@@ -84,6 +85,9 @@ BaseBox* mp4Parser::AllocBox(uint32_t type, uint32_t size)
     case FOURCC_udta:
 	case FOURCC_iprp:
         box = new DefaultContainerBox(type, size);
+        break;
+    case FOURCC_elst:
+        box = new EditListBox(type, size);
         break;
     case FOURCC_mvhd:
         box = new MovieHeaderBox(type, size);
@@ -229,6 +233,12 @@ void mp4Parser::DeleteStream(Stream* s)
         delete[] s->stsz_data;
     if(s->sample_position)
         delete[] s->sample_position;
+    if(s->elst_data)
+        delete[] s->elst_data;
+    if(s->sample_dts)
+        delete[] s->sample_dts;
+    if(s->sample_pts)
+        delete[] s->sample_pts;
 
     delete s;
 }
@@ -272,8 +282,73 @@ int mp4Parser::Parse(const char* filename)
     for(int i=0;i<this->stream_num;i++)
     {
         this->GetSamplePosition(this->streams[i]);
+        this->GetSampleTimeStamp(this->streams[i]);
     }
     return 0;
+}
+
+//pts[index] >= elst.media_time
+int mp4Parser::FindFirstDisplaySample(Stream* s)
+{
+    int sample_count = s->stsz_count;
+    uint64_t start_media_time = 0;
+    if(s->elst_data != NULL)
+        start_media_time = s->elst_data[0].media_time;
+
+    for(int i=0;i<sample_count;i++)
+    {
+        if(s->sample_pts[i] >= start_media_time)
+            return i;
+    }
+    return 0;
+}
+
+void mp4Parser::GetSampleTimeStamp(Stream* s)
+{
+    int sample_count = s->stsz_count;
+    if(sample_count <= 0)
+        return;
+
+    s->sample_dts = new int64_t[sample_count];
+    s->sample_pts = new int64_t[sample_count];
+    int index = 1;
+    s->sample_dts[0] = 0;
+    for(int i=0;i<s->stts_count;i++)
+    {
+        for(int j=0;j<s->stts_data[i].sample_count;j++)
+        {
+            int delta = s->stts_data[i].sample_delta;
+            s->sample_dts[index] = s->sample_dts[index-1] + delta;
+            index++;
+            if(index == sample_count)
+                break;
+        }
+    }
+    index = 0;
+    for(int i=0;i<s->ctts_count;i++)
+    {
+        for(int j=0;j<s->ctts_data[i].sample_count;j++)
+        {
+            s->sample_pts[index] = s->sample_dts[index] + s->ctts_data[i].sample_offset;
+            index++;
+            if(index == sample_count)
+                break;
+        }
+    }
+    if(s->ctts_count == 0)
+    {
+        for(int i=0;i<sample_count;i++)
+        {
+            s->sample_pts[i] = s->sample_dts[i];
+        }
+    }
+    int first_sample_index = FindFirstDisplaySample(s);
+    uint64_t first_sample_pts = s->sample_pts[first_sample_index];
+    for(int i=0;i<sample_count;i++)
+    {
+        s->sample_dts[i] -= first_sample_pts;
+        s->sample_pts[i] -= first_sample_pts;
+    }
 }
 
 void mp4Parser::GetSamplePosition(Stream* s)

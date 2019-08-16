@@ -28,7 +28,6 @@ int MediaHeaderBox::Parse(class mp4Parser* parser, uint32_t start_pos)
     io->SetPos(start_pos);
 
     uint64_t creation_time, modification_time;
-    uint32_t timescale, duration;
 
     uint8_t version = io->Read8();
     uint32_t flags = io->Read24();
@@ -49,6 +48,17 @@ int MediaHeaderBox::Parse(class mp4Parser* parser, uint32_t start_pos)
     }
 
     uint16_t language = io->Read16();
-    make_language_iso639(language, parser->streams[parser->stream_num-1]->language);
+    s = parser->streams[parser->stream_num-1];
+    make_language_iso639(language, s->language);
+    s->time_scale = timescale;
     return 0;
+}
+
+string MediaHeaderBox::GetDescription()
+{
+    string desc = BasePosition::GetDescription();
+    char tmp[128];
+    sprintf(tmp, "timescale = %d, duration = %f(%d/%d)\n", timescale, (float)duration/timescale, duration, timescale);
+    desc += tmp;
+    return desc;
 }

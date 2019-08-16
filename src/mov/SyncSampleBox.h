@@ -11,6 +11,9 @@ public:
 
 public:
     virtual int Parse(class mp4Parser* parser, uint32_t start_pos);
+    string GetDescription();
+private:
+    Stream* s;
 };
 
 #endif // SYNCSAMPLEBOX_H

@@ -268,8 +268,11 @@ void MainWindow::ShowSample(Stream* s, int index)
     int len = s->stsz_data[index-1];
     this->displayHexFromReader(this->reader, start, len);
 
+    int64_t dts = s->sample_dts[index-1];
+    int64_t pts = s->sample_pts[index-1];
+
     char sampleInfo[1024];
-    sprintf(sampleInfo, "Position = %d\nLength = %d (0x%02X)\n", start, len, len);
+    sprintf(sampleInfo, "Position = %d\nLength = %d (0x%02X)\ndts = %lld\npts = %lld\n", start, len, len, dts, pts);
     ui->textEditSampleInfo->setText(sampleInfo);
 }
 

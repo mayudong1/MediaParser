@@ -24,6 +24,14 @@ typedef struct stsc_entry
     uint32_t sample_description_index;
 }stsc_entry;
 
+typedef struct elst_entry
+{
+    uint64_t segment_duration;
+    int64_t media_time;
+    int16_t media_rate_integer;
+    int16_t media_rate_fraction;
+}elst_entry;
+
 typedef struct Stream
 {
     int index;
@@ -58,7 +66,13 @@ typedef struct Stream
     uint32_t stsz_count;
     uint32_t* stsz_data;
 
+    uint32_t elst_count;
+    elst_entry* elst_data;
+
     uint64_t* sample_position;
+    int64_t* sample_dts;
+    int64_t* sample_pts;
+    uint32_t time_scale;
 }Stream;
 
 
