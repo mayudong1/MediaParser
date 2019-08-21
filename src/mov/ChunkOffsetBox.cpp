@@ -34,6 +34,7 @@ string ChunkOffsetBox::GetDescription()
     {
         char tmp[128];
         sprintf(tmp, "entry_count = %d\n", s->stco_count);
+        desc += tmp;
         for(int i=0;i<s->stco_count;i++)
         {
             sprintf(tmp, "index = %d, chunk_offset = %lld\n", i, s->stco_data[i]);
