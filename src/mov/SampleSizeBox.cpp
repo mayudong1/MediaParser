@@ -14,7 +14,7 @@ int SampleSizeBox::Parse(class mp4Parser* parser, uint32_t start_pos)
     io->Read8(); //version
     io->Read24(); //flags
 
-    Stream* s = parser->streams[parser->stream_num-1];
+    s = parser->streams[parser->stream_num-1];
 
     if(this->type == FOURCC_stsz)
     {
@@ -57,3 +57,27 @@ int SampleSizeBox::Parse(class mp4Parser* parser, uint32_t start_pos)
     return 0;
 }
 
+string SampleSizeBox::GetDescription()
+{
+    string desc = BasePosition::GetDescription();
+    if(this->s != NULL)
+    {
+        char tmp[128];
+        sprintf(tmp,"sample_count = %d\n", s->stsz_count);
+        desc += tmp;
+        if(s->default_sample_size != 0)
+        {
+            sprintf(tmp, "default_size = %d\n", s->default_sample_size);
+            desc += tmp;
+        }
+        else
+        {
+            for(int i=0;i<s->stsz_count;i++)
+            {
+                sprintf(tmp, "index = %d, size = %d\n", i, s->stsz_data[i]);
+                desc += tmp;
+            }
+        }
+    }
+    return desc;
+}

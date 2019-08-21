@@ -9,6 +9,9 @@ public:
     ChunkOffsetBox(uint32_t type, uint32_t size);
 
     virtual int Parse(class mp4Parser* parser, uint32_t start_pos);
+    string GetDescription();
+private:
+    Stream* s;
 };
 
 #endif // CHUNKOFFSETBOX_H
