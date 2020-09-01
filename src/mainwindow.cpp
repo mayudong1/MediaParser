@@ -5,6 +5,7 @@
 #include <qtextcursor.h>
 #include <qfiledialog.h>
 #include <QtGlobal>
+#include <QFontDatabase>
 #include "mov/BaseBox.h"
 #include "mov/Mp4Parser.h"
 #include "flv/FLVParser.h"
@@ -24,10 +25,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->reader = NULL;
     this->parser = NULL;
     ui->setupUi(this);
-#ifdef Q_OS_DARWIN
-    QFont font("SimSun",14,QFont::Normal);
-    ui->hexView->setFont(font);
-#endif
+    QFont fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+    fixedFont.setPointSize(12);
+    ui->hexView->setFont(fixedFont);
 
     ResetSampleInfo();
 
