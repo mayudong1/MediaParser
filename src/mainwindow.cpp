@@ -138,9 +138,9 @@ void MainWindow::displayHex(unsigned char* pData, int len)
         for(int j=0;j<num;j++)
         {
             QString tmp;
-            tmp.sprintf("%02X ", pData[index]);
+            tmp = QString::asprintf("%02X ", pData[index]);
             str1.append(tmp);
-            tmp.sprintf("%c", get_printable_char(pData[index]));
+            tmp = QString::asprintf("%c", get_printable_char(pData[index]));
             str2.append(tmp);
             index++;
         }

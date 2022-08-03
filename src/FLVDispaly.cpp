@@ -26,27 +26,27 @@ void FLVDispaly::DisplayFlvHeader(QTreeWidgetItem* root, FLVParser* parser)
     header->setData(0, Qt::UserRole, value);
 
     QString strTmp;
-    strTmp.sprintf("signature: %s", flv->header.signature);
+    strTmp = QString::asprintf("signature: %s", flv->header.signature);
     QTreeWidgetItem *signature = new QTreeWidgetItem(QStringList(strTmp));
     header->addChild(signature);
 
-    strTmp.sprintf("version: %d", flv->header.version);
+    strTmp = QString::asprintf("version: %d", flv->header.version);
     QTreeWidgetItem *version = new QTreeWidgetItem(QStringList(strTmp));
     header->addChild(version);
 
-    strTmp.sprintf("has video: %d", flv->header.hasVideo);
+    strTmp = QString::asprintf("has video: %d", flv->header.hasVideo);
     QTreeWidgetItem *hasVideo = new QTreeWidgetItem(QStringList(strTmp));
     header->addChild(hasVideo);
 
-    strTmp.sprintf("has audio: %d", flv->header.hasAudio);
+    strTmp = QString::asprintf("has audio: %d", flv->header.hasAudio);
     QTreeWidgetItem *hasAudio = new QTreeWidgetItem(QStringList(strTmp));
     header->addChild(hasAudio);
 
-    strTmp.sprintf("header size: %d", flv->header.headerLen);
+    strTmp = QString::asprintf("header size: %d", flv->header.headerLen);
     QTreeWidgetItem *headerSize = new QTreeWidgetItem(QStringList(strTmp));
     header->addChild(headerSize);
 
-    strTmp.sprintf("First Tag size: %d", flv->firstTagSize);
+    strTmp = QString::asprintf("First Tag size: %d", flv->firstTagSize);
     QTreeWidgetItem *firstTagSize = new QTreeWidgetItem(QStringList(strTmp));
     root->addChild(firstTagSize);
 }
@@ -64,10 +64,10 @@ void FLVDispaly::DisplayFlvTags(QTreeWidgetItem* root, FLVParser* parser)
         switch (tag->header.type)
         {
         case 8:
-            strTagType.sprintf("Audio Tag%d", audioIndex++);
+            strTagType = QString::asprintf("Audio Tag%d", audioIndex++);
             break;
         case 9:
-            strTagType.sprintf("Video Tag%d", videoIndex++);
+            strTagType = QString::asprintf("Video Tag%d", videoIndex++);
             break;
         case 18:
             strTagType = "Metadata Tag";
@@ -82,7 +82,7 @@ void FLVDispaly::DisplayFlvTags(QTreeWidgetItem* root, FLVParser* parser)
 
 //        displayFLVTagDetail(tagItem, tag);
 
-        strTmp.sprintf("preTagSize: %d", tag->preTagSize);
+        strTmp = QString::asprintf("preTagSize: %d", tag->preTagSize);
         QTreeWidgetItem *preTagSizeItem = new QTreeWidgetItem(QStringList(strTmp));
         QVariant preTagSizeItemValue = QVariant::fromValue((void *)&tag->preTagSize_pos);
         preTagSizeItem->setData(0, Qt::UserRole, preTagSizeItemValue);
