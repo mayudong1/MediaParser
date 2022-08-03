@@ -31,7 +31,7 @@ void mp4Display::Display(QTreeWidget* tree, QTextEdit* edit, mp4Parser* parser)
     ShowBox(root, mp4->childs);
 
     QString info;
-    info.asprintf("duration = %.02f(%lld/%d)\n", (float)parser->duration/parser->timescale, parser->duration, parser->timescale);
+    info.sprintf("duration = %.02f(%lld/%d)\n", (float)parser->duration/parser->timescale, parser->duration, parser->timescale);
     edit->setText(info);
 
 
@@ -40,7 +40,7 @@ void mp4Display::Display(QTreeWidget* tree, QTextEdit* edit, mp4Parser* parser)
         Stream* s = parser->streams[i];
         if(s->type == HANDLER_VIDEO)
         {
-            info.asprintf("stream %d:%s\n"
+            info.sprintf("stream %d:%s\n"
                          "tkhd_width = %d\n"
                          "tkhd_height=%d\n"
                          "language = %s\n"
@@ -59,7 +59,7 @@ void mp4Display::Display(QTreeWidget* tree, QTextEdit* edit, mp4Parser* parser)
         }
         if(s->type == HANDLER_AUDIO)
         {
-            info.asprintf("stream %d:%s\n"
+            info.sprintf("stream %d:%s\n"
                          "language = %s\n"
                          "handler = %s\n"
                          "channel_count = %d\n"
@@ -77,15 +77,15 @@ void mp4Display::Display(QTreeWidget* tree, QTextEdit* edit, mp4Parser* parser)
         edit->append(info);
         if(s->stts_count > 0)
         {
-            info.asprintf("stts_count = %d", s->stts_count);
+            info.sprintf("stts_count = %d", s->stts_count);
             edit->append(info);
             for(int j=0;j<s->stts_count;j++)
             {
-                info.asprintf("sample_count = %d, delta = %d", s->stts_data[j].sample_count, s->stts_data[j].sample_delta);
+                info.sprintf("sample_count = %d, delta = %d", s->stts_data[j].sample_count, s->stts_data[j].sample_delta);
                 edit->append(info);
             }
         }
-        info.asprintf("sync frame count = %d\n"
+        info.sprintf("sync frame count = %d\n"
                      "ctts count = %d\n"
                      "chunk count = %d\n"
                      "SampleToChunk count = %d\n"
