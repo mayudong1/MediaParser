@@ -30,8 +30,14 @@ int AudioSampleEntry::Parse(class mp4Parser* parser, uint32_t start_pos)
 
     s->sample_rate = io->Read32()>>16;
 
-    BaseBox* box = parser->ReadBox(io->GetPos());
-    parser->AddBox(this, box);
+    //below other box
+    int cur_pos = io->GetPos();
+    while(cur_pos-start_pos < this->size-16){
+        BaseBox* box = parser->ReadBox(cur_pos);
+        parser->AddBox(this, box);
+        cur_pos += box->size;
+        io->SetPos(cur_pos);
+    }
 
     return 0;
 }

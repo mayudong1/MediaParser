@@ -83,7 +83,9 @@ BaseBox* mp4Parser::AllocBox(uint32_t type, uint32_t size)
 	case FOURCC_dinf:
     case FOURCC_stbl:
     case FOURCC_udta:
-	case FOURCC_iprp:
+    case FOURCC_iprp:
+    case FOURCC_sinf:
+    case FOURCC_schi:
         box = new DefaultContainerBox(type, size);
         break;
     case FOURCC_elst:

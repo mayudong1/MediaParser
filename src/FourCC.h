@@ -32,6 +32,10 @@
 #define FOURCC_iref MKTAG('i','r','e','f')
 #define FOURCC_iloc MKTAG('i','l','o','c')
 
+//encryption
+#define FOURCC_sinf MKTAG('s','i','n','f')
+#define FOURCC_schi MKTAG('s','c','h','i')
+
 //heif
 #define FOURCC_iprp MKTAG('i','p','r','p')
 #define FOURCC_ipco MKTAG('i','p','c','o')

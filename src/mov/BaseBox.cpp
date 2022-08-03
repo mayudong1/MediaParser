@@ -31,6 +31,7 @@ int BaseBox::Parse(class mp4Parser* parser, uint32_t start_pos)
 {
     parser;
     start_pos;
+
     return 0;
 }
 
