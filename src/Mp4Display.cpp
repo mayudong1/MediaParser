@@ -5,7 +5,7 @@ mp4Display::mp4Display()
 
 }
 
-static char* getHandlerType(uint32_t type)
+static const char* getHandlerType(uint32_t type)
 {
     if(type == HANDLER_AUDIO)
         return "Audio";
